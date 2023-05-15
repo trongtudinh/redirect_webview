@@ -1,7 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:frontbrand_kyc/web_view_stack.dart';
+import 'dart:io';
 
-void main() => runApp(MyApp());
+import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:frontbrand_kyc/web_view_stack.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
+
+  await Permission.camera.request();
+  await Permission.storage.request();
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -69,23 +84,38 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                decoration:
+                    const InputDecoration(prefixIcon: Icon(Icons.search)),
                 controller: _textEditingController,
+                keyboardType: TextInputType.url,
               ),
+            ),
+            const SizedBox(
+              height: 22,
+            ),
+            ElevatedButton(
+              child: const Icon(Icons.arrow_forward),
+              onPressed: () async {
+                var urlStr = _textEditingController.text;
+                if (urlStr.isEmpty) {
+                  return;
+                }
+
+                if (!["https"].contains(_textEditingController.text)) {
+                  urlStr = 'https://$urlStr';
+                }
+                FocusScope.of(context).unfocus();
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WebViewStack(
+                              url: _textEditingController.text,
+                            )));
+              },
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => WebViewStack(
-                        url: _textEditingController.text,
-                      )));
-        },
-        tooltip: 'Go',
-        child: const Icon(Icons.open_in_browser),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

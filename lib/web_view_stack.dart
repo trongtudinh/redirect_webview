@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebViewStack extends StatefulWidget {
   const WebViewStack({required this.url, super.key}); // MODIFY
@@ -11,34 +11,24 @@ class WebViewStack extends StatefulWidget {
 }
 
 class _WebViewStackState extends State<WebViewStack> {
-  var loadingPercentage = 0;
-  late WebViewController _webviewController;
+  var loadingPercentage = 0.0;
+  InAppWebViewController? webViewController;
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+      crossPlatform: InAppWebViewOptions(
+        useShouldOverrideUrlLoading: true,
+        mediaPlaybackRequiresUserGesture: false,
+      ),
+      android: AndroidInAppWebViewOptions(
+        useHybridComposition: true,
+      ),
+      ios: IOSInAppWebViewOptions(
+        allowsInlineMediaPlayback: true,
+      ));
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _webviewController = WebViewController()
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageStarted: (url) {
-          setState(() {
-            loadingPercentage = 0;
-          });
-        },
-        onProgress: (progress) {
-          setState(() {
-            loadingPercentage = progress;
-          });
-        },
-        onPageFinished: (url) {
-          setState(() {
-            loadingPercentage = 100;
-          });
-        },
-      ))
-      ..loadRequest(
-        Uri.parse('https://${widget.url}'),
-      );
   }
 
   @override
@@ -46,16 +36,39 @@ class _WebViewStackState extends State<WebViewStack> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
-          title: Text(widget.url),
+          title: const Center(
+              child: Text(
+            'KYC',
+            style: TextStyle(color: Colors.white),
+          )),
         ),
         body: Column(
           children: [
             Expanded(
                 child: Stack(children: [
-              WebViewWidget(controller: _webviewController),
-              if (loadingPercentage < 100)
+              InAppWebView(
+                initialUrlRequest: URLRequest(
+                  url: Uri.parse(widget.url),
+                ),
+                initialOptions: options,
+                androidOnPermissionRequest:
+                    (controller, origin, resources) async {
+                  return PermissionRequestResponse(
+                      resources: resources,
+                      action: PermissionRequestResponseAction.GRANT);
+                },
+                onProgressChanged: (controller, progress) {
+                  setState(() {
+                    loadingPercentage = progress / 100;
+                  });
+                },
+                onConsoleMessage: (controller, message) {
+                  print(message);
+                },
+              ),
+              if (loadingPercentage < 1.0)
                 LinearProgressIndicator(
-                  value: loadingPercentage / 100.0,
+                  value: loadingPercentage,
                 ),
             ]))
           ],
