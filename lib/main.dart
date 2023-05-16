@@ -104,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (!["https"].contains(_textEditingController.text)) {
                   urlStr = 'https://$urlStr';
                 }
+                
                 FocusScope.of(context).unfocus();
 
                 Navigator.push(
