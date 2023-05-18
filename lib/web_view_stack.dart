@@ -27,7 +27,6 @@ class _WebViewStackState extends State<WebViewStack> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -62,6 +61,12 @@ class _WebViewStackState extends State<WebViewStack> {
                     loadingPercentage = progress / 100;
                   });
                 },
+                onLoadHttpError: (controller, url, statusCode, description) {
+                  showAlertDialog(context, description);
+                },
+                onLoadError: (controller, url, code, message) {
+                  showAlertDialog(context, message);
+                },
                 onConsoleMessage: (controller, message) {
                   print(message);
                 },
@@ -73,5 +78,30 @@ class _WebViewStackState extends State<WebViewStack> {
             ]))
           ],
         ));
+  }
+
+  showAlertDialog(BuildContext context, String message) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Error message"),
+      content: Text(message),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
