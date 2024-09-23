@@ -11,19 +11,20 @@ class WebViewStack extends StatefulWidget {
 }
 
 class _WebViewStackState extends State<WebViewStack> {
+  // final GlobalKey webViewKey = GlobalKey();
   var loadingPercentage = 0.0;
   InAppWebViewController? webViewController;
-  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-      crossPlatform: InAppWebViewOptions(
-        useShouldOverrideUrlLoading: true,
-        mediaPlaybackRequiresUserGesture: false,
-      ),
-      android: AndroidInAppWebViewOptions(
-        useHybridComposition: true,
-      ),
-      ios: IOSInAppWebViewOptions(
-        allowsInlineMediaPlayback: true,
-      ));
+  InAppWebViewSettings settings = InAppWebViewSettings(
+    // useShouldOverrideUrlLoading: true,
+    mediaPlaybackRequiresUserGesture: false,
+    useOnDownloadStart: true,
+    javaScriptEnabled: true,
+    javaScriptCanOpenWindowsAutomatically: true,
+    supportZoom: false,
+    useHybridComposition: true,
+    alwaysBounceVertical: true,
+    allowsInlineMediaPlayback: true,
+  );
 
   @override
   void initState() {
@@ -46,26 +47,30 @@ class _WebViewStackState extends State<WebViewStack> {
             Expanded(
                 child: Stack(children: [
               InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.parse(widget.url),
-                ),
-                initialOptions: options,
-                androidOnPermissionRequest:
-                    (controller, origin, resources) async {
-                  return PermissionRequestResponse(
-                      resources: resources,
-                      action: PermissionRequestResponseAction.GRANT);
+                // key: webViewKey,
+                initialUrlRequest: URLRequest(url: WebUri(widget.url)),
+                initialSettings: settings,
+                // initialUserScripts: UnmodifiableListView<UserScript>([]),
+                onWebViewCreated: (controller) {
+                  webViewController = controller;
+                },
+                onPermissionRequest: (controller, permission) async {
+                  return PermissionResponse(
+                      action: PermissionResponseAction.GRANT);
                 },
                 onProgressChanged: (controller, progress) {
                   setState(() {
                     loadingPercentage = progress / 100;
                   });
                 },
-                onLoadHttpError: (controller, url, statusCode, description) {
-                  showAlertDialog(context, description);
+                onLoadStart: (controller, url) {
+                  print("On start");
                 },
-                onLoadError: (controller, url, code, message) {
-                  showAlertDialog(context, message);
+                onReceivedHttpError: (controller, request, response) {
+                  showAlertDialog(context, response.toString());
+                },
+                onReceivedError: (controller, request, error) {
+                  showAlertDialog(context, error.description);
                 },
                 onConsoleMessage: (controller, message) {
                   print(message);

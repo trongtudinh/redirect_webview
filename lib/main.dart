@@ -9,7 +9,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (Platform.isAndroid) {
-    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+    await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
   await Permission.camera.request();

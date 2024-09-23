@@ -1,19 +1,19 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_inappwebview (0.0.1):
+  - flutter_inappwebview_ios (0.0.1):
     - Flutter
-    - flutter_inappwebview/Core (= 0.0.1)
+    - flutter_inappwebview_ios/Core (= 0.0.1)
     - OrderedSet (~> 5.0)
-  - flutter_inappwebview/Core (0.0.1):
+  - flutter_inappwebview_ios/Core (0.0.1):
     - Flutter
     - OrderedSet (~> 5.0)
   - OrderedSet (5.0.0)
-  - permission_handler_apple (9.0.4):
+  - permission_handler_apple (9.1.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
+  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 SPEC REPOS:
@@ -23,17 +23,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_inappwebview:
-    :path: ".symlinks/plugins/flutter_inappwebview/ios"
+  flutter_inappwebview_ios:
+    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_inappwebview_ios: 97215cf7d4677db55df76782dbd2930c5e1c1ea0
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
-  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
 
-PODFILE CHECKSUM: 736c8fec2a497757800d22adfb29bd677b18c605
+PODFILE CHECKSUM: 304d2ce4803ac1f7e62f738980c156878165d4f0
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2
