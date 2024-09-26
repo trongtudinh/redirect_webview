@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _textEditingController.text =
-        'https://moneyinternational.sb.getid.dev/vp/getid-doc-selfie-liveness?token=eyJhbGciOiJSU0EtT0FFUC0yNTYiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0.YRdKGkwgcBOotCCnL4QoQqwVslghY6sAb9_I2O4_YbOiAhBLF_9C4W_hVUn6BOxktx0yjtodt6SPtc71NtNEDR3nVyCIEDNpepT8ZFBCrH_lqTTRE7iJaA1c3lCGuQ9rsQos4ETdSATOICFvDSmm_pdoYNaND3Sk4nHingFjRCWBZ2h6fLNNx-n_hwUkWkrjFMdHhwVKXd-knsuKBfED4nxUOuCYWKHnHuWJW-hvAO7dUkn38G5MuiUldqV99sg0gdVwgapc484q7qx98elhs0_9lnS_mpKayMkmjXO_1GWpKG7H6FesAd2nY790VhZNB5SnoysgUxMGhMbYOdQXug.wydvqu0XFi04R9jrGV9_8Q.b1xN924sD9PNGOEpSM6UIx1iZDQU_IcXoYPLP_eM7tLfzpU1R1DOEZwz8HaSaoZTYhBbNBLmQNxgaFgqn2QE3uFsJzEZcCBWxSpu6SJSNO8.ds-OS7867JjlLT2qjKNLYcx8j_5BFWVqhB8fu4j6kTM';
+        'https://milabapi.mitech.cloud/client/v2/open-remit/webview/v2-webview-tink-provider-callback?payment_request_id=1584a615798d11efbc312ba0b88d466f';
   }
 
   @override

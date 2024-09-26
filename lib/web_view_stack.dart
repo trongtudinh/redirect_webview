@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class WebViewStack extends StatefulWidget {
   const WebViewStack({required this.url, super.key}); // MODIFY
@@ -13,6 +14,8 @@ class WebViewStack extends StatefulWidget {
 class _WebViewStackState extends State<WebViewStack> {
   // final GlobalKey webViewKey = GlobalKey();
   var loadingPercentage = 0.0;
+  String htmlFilePath = 'assets/sample.html';
+
   InAppWebViewController? webViewController;
   InAppWebViewSettings settings = InAppWebViewSettings(
     // useShouldOverrideUrlLoading: true,
@@ -29,6 +32,15 @@ class _WebViewStackState extends State<WebViewStack> {
   @override
   void initState() {
     super.initState();
+    _loadHtmlFromAssets();
+
+  }
+
+  Future<void> _loadHtmlFromAssets() async {
+    String fileHtmlContents = await rootBundle.loadString(htmlFilePath);
+    if (webViewController != null) {
+      webViewController?.loadData(data: fileHtmlContents);
+    }
   }
 
   @override
@@ -50,9 +62,15 @@ class _WebViewStackState extends State<WebViewStack> {
                 // key: webViewKey,
                 initialUrlRequest: URLRequest(url: WebUri(widget.url)),
                 initialSettings: settings,
-                // initialUserScripts: UnmodifiableListView<UserScript>([]),
                 onWebViewCreated: (controller) {
                   webViewController = controller;
+                  _loadHtmlFromAssets();
+                  controller.addJavaScriptHandler(
+                      handlerName: 'transferEvent',
+                      callback: (args) {
+                        print(args);
+                        // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
+                      });
                 },
                 onPermissionRequest: (controller, permission) async {
                   return PermissionResponse(

@@ -1,0 +1,71 @@
+
+<!doctype html>
+<html lang="fr-FR" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>Open Remit</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta property="og:title" content="">
+<meta property="og:type" content="">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+
+<link rel="icon" type="image/vnd.microsoft.icon"
+	href="../assets/images/mitech-logo.png" />
+
+<link rel="apple-touch-icon" href="icon.png">
+<!-- Place favicon.ico in the root directory -->
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/bootstrap.css">
+<link rel="stylesheet" href="../assets/css/child.css">
+
+<meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+	<div class="global d-lg-flex flex-lg-column he-lg-100">
+		<div
+			class="main container d-lg-flex flex-lg-column mt-lg-auto mb-lg-auto">
+			<div class="row">
+				<div class="col-md-6 offset-sm-3 mb-45">
+					<div
+						class="title-box d-flex flex-column justify-content-center align-items-center">
+						<h2 class="fs-22 fs-lg-39">Confirmation</h2>
+					</div>
+				</div>
+
+				<div class="col-md-4 offset-sm-4">
+					<div class="column">
+						<div class="icon-request d-flex justify-content-center mb-25">
+							<i><img width="69" src="../assets/images/icons/check-green.svg"
+								alt="" /></i>
+						</div>
+						<div class="texte-request d-flex flex-column align-items-center">
+							<p class="fs-24 fs-lg-26 dark-gray mb-0">
+								Merci,
+								<out></out>
+							</p>
+							<p class="fs-15 fs-lg-18 light-gray">Paiement enregistré</p>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+
+		<div class="d-none buttons-set bt-1 pt-lg-35 pb-lg-35 mb-18 mb-lg-0">
+			&nbsp;</div>
+	</div>
+	<script>
+		window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+			window.flutter_inappwebview.callHandler('transferEvent', {result: 'success'})
+		});
+	</script>
+</body>
+
+</html>
